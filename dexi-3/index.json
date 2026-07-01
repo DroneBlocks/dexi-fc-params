@@ -1,0 +1,81 @@
+{
+  "profiles": [
+    {
+      "key": "indoor-flow",
+      "name": "DEXI Indoor (Flow Only)",
+      "file": "indoor-flow.params",
+      "paramCount": 9,
+      "isDefault": true,
+      "selfContained": false,
+      "additive": false,
+      "comingSoon": false,
+      "description": "GPS-denied indoor flight from optical flow + laser range. No external pose source needed — flies anywhere with floor texture. This is the shipping default."
+    },
+    {
+      "key": "indoor-apriltag",
+      "name": "DEXI Indoor (AprilTags)",
+      "file": "indoor-apriltag.params",
+      "paramCount": 5,
+      "isDefault": false,
+      "selfContained": false,
+      "additive": false,
+      "comingSoon": false,
+      "description": "Adds an external-vision pose source (AprilTag or VIO) for drift-free horizontal position and yaw. Requires a companion node publishing VISION_POSITION_ESTIMATE to PX4."
+    },
+    {
+      "key": "outdoor-gps",
+      "name": "DEXI Outdoor (GPS)",
+      "file": "outdoor-gps.params",
+      "paramCount": 6,
+      "isDefault": false,
+      "selfContained": false,
+      "additive": false,
+      "comingSoon": true,
+      "description": "GPS + external-compass outdoor flight. Requires a GPS+compass module on the airframe. Proposed param set — documented here, not yet flight-validated (kept disabled until then)."
+    },
+    {
+      "key": "flight-kit",
+      "name": "DEXI-3 Flight Kit — Complete Setup",
+      "file": "flight-kit.params",
+      "paramCount": 32,
+      "isDefault": false,
+      "selfContained": true,
+      "additive": false,
+      "comingSoon": false,
+      "description": "The one file to send a Flight Kit (Build / Fly). Everything a flow position-hold drone flown by radio needs: flow-sensor link + RC + validated flight tune + indoor flow navigation. No companion computer."
+    },
+    {
+      "key": "developer-kit",
+      "name": "DEXI-3 Developer Kit — Complete Setup",
+      "file": "developer-kit.params",
+      "paramCount": 36,
+      "isDefault": false,
+      "selfContained": true,
+      "additive": false,
+      "comingSoon": false,
+      "description": "The one file to send a Developer Kit (Build / Fly / Code). Everything in the Flight Kit PLUS the Pi companion links — ROS2 over uXRCE-DDS and MAVLink-over-WiFi via mavlink-router."
+    },
+    {
+      "key": "developer-comms-addon",
+      "name": "DEXI-3 Developer Comms (add-on)",
+      "file": "developer-comms-addon.params",
+      "paramCount": 4,
+      "isDefault": false,
+      "selfContained": false,
+      "additive": false,
+      "comingSoon": false,
+      "description": "Add-on: just the Pi companion links (ROS2 + MAVLink-over-WiFi). Use this to upgrade a drone that already has the Flight Kit setup — leaves tune and navigation untouched."
+    },
+    {
+      "key": "acro-rates",
+      "name": "DEXI-3 ACRO rates",
+      "file": "acro-rates.params",
+      "paramCount": 3,
+      "isDefault": false,
+      "selfContained": false,
+      "additive": true,
+      "comingSoon": false,
+      "description": "ADDITIVE — writes ONLY the ACRO max rates for snappy flips/rolls. Touches nothing else: no comms/EKF/airframe params, no board defaults, no reboot. Layers on top of whatever profile you already run."
+    }
+  ]
+}

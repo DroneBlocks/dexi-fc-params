@@ -1,0 +1,43 @@
+# QGroundControl / PX4 onboard parameters
+#
+# Profile: DEXI-3 Flight Kit — Complete Setup  (key: flight-kit)
+# The one file to send a Flight Kit (Build / Fly). Everything a flow position-hold drone flown by radio needs: flow-sensor link + RC + validated flight tune + indoor flow navigation. No companion computer.
+#
+# Valid airframes (SYS_AUTOSTART): 4701
+# COMPLETE per-kit setup — comms + flight tune + navigation in ONE file. Load just this.
+# Load in QGC: Vehicle Setup > Parameters > Tools > Load from file.
+# After loading, the FC reboots / power-cycle to let the EKF reinitialize.
+#
+# MAV	COMP	PARAM	VALUE	TYPE
+1	1	MAV_2_CONFIG	103	6
+1	1	SER_TEL3_BAUD	115200	6
+1	1	RC_CRSF_PRT_CFG	0	6
+1	1	SENS_BOARD_ROT	1	6
+1	1	MC_AIRMODE	0	6
+1	1	MC_ROLLRATE_K	0.7	9
+1	1	MC_PITCHRATE_K	0.7	9
+1	1	MC_YAWRATE_K	1.0	9
+1	1	MC_ROLLRATE_P	0.15	9
+1	1	MC_PITCHRATE_P	0.15	9
+1	1	MC_ROLLRATE_I	0.2	9
+1	1	MC_PITCHRATE_I	0.2	9
+1	1	MC_ROLLRATE_D	0.003	9
+1	1	MC_PITCHRATE_D	0.003	9
+1	1	MC_ROLLRATE_MAX	220.0	9
+1	1	MC_PITCHRATE_MAX	220.0	9
+1	1	MC_YAWRATE_P	0.2	9
+1	1	MC_YAWRATE_I	0.1	9
+1	1	MC_YAWRATE_MAX	200.0	9
+1	1	MC_ROLL_P	6.5	9
+1	1	MC_PITCH_P	6.5	9
+1	1	MC_YAW_P	2.8	9
+1	1	MPC_MAN_TILT_MAX	60.0	9
+1	1	EKF2_EV_CTRL	0	6
+1	1	EKF2_OF_CTRL	1	6
+1	1	EKF2_HGT_REF	2	6
+1	1	EKF2_RNG_CTRL	2	6
+1	1	EKF2_BARO_CTRL	1	6
+1	1	EKF2_GPS_CTRL	0	6
+1	1	EKF2_MAG_TYPE	5	6
+1	1	COM_ARM_WO_GPS	1	6
+1	1	MPC_XY_VEL_MAX	4.0	9

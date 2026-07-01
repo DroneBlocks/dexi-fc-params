@@ -1,0 +1,13 @@
+# QGroundControl / PX4 onboard parameters
+#
+# Profile: DEXI-3 ACRO rates  (key: acro-rates)
+# ADDITIVE — writes ONLY the ACRO max rates for snappy flips/rolls. Touches nothing else: no comms/EKF/airframe params, no board defaults, no reboot. Layers on top of whatever profile you already run.
+#
+# ADDITIVE overlay — sets ONLY the params below, layers on top of your current config.
+# Load in QGC: Vehicle Setup > Parameters > Tools > Load from file.
+# After loading, the FC reboots / power-cycle to let the EKF reinitialize.
+#
+# MAV	COMP	PARAM	VALUE	TYPE
+1	1	MC_ACRO_R_MAX	720.0	9
+1	1	MC_ACRO_P_MAX	720.0	9
+1	1	MC_ACRO_Y_MAX	400.0	9

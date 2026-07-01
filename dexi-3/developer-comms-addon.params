@@ -1,0 +1,15 @@
+# QGroundControl / PX4 onboard parameters
+#
+# Profile: DEXI-3 Developer Comms (add-on)  (key: developer-comms-addon)
+# Add-on: just the Pi companion links (ROS2 + MAVLink-over-WiFi). Use this to upgrade a drone that already has the Flight Kit setup — leaves tune and navigation untouched.
+#
+# Valid airframes (SYS_AUTOSTART): 4701
+# Overlay — these are the params the DEXI configurator writes for this profile.
+# Load in QGC: Vehicle Setup > Parameters > Tools > Load from file.
+# After loading, the FC reboots / power-cycle to let the EKF reinitialize.
+#
+# MAV	COMP	PARAM	VALUE	TYPE
+1	1	MAV_0_CONFIG	101	6
+1	1	SER_TEL1_BAUD	500000	6
+1	1	UXRCE_DDS_CFG	102	6
+1	1	SER_TEL2_BAUD	921600	6

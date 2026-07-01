@@ -1,0 +1,20 @@
+# QGroundControl / PX4 onboard parameters
+#
+# Profile: DEXI Indoor (Flow Only)  (key: indoor-flow)
+# GPS-denied indoor flight from optical flow + laser range. No external pose source needed — flies anywhere with floor texture. This is the shipping default.
+#
+# Valid airframes (SYS_AUTOSTART): 4601, 4701
+# Overlay — these are the params the DEXI configurator writes for this profile.
+# Load in QGC: Vehicle Setup > Parameters > Tools > Load from file.
+# After loading, the FC reboots / power-cycle to let the EKF reinitialize.
+#
+# MAV	COMP	PARAM	VALUE	TYPE
+1	1	EKF2_EV_CTRL	0	6
+1	1	EKF2_OF_CTRL	1	6
+1	1	EKF2_HGT_REF	2	6
+1	1	EKF2_RNG_CTRL	2	6
+1	1	EKF2_BARO_CTRL	1	6
+1	1	EKF2_GPS_CTRL	0	6
+1	1	EKF2_MAG_TYPE	5	6
+1	1	COM_ARM_WO_GPS	1	6
+1	1	MPC_XY_VEL_MAX	4.0	9

@@ -20,7 +20,7 @@ Files are organized by platform:
 
 ## DEXI-3
 
-### Send ONE file per kit
+### Complete setup — one file per kit
 
 Each kit has a single file bundling its comms + flight tune + flow navigation.
 
@@ -57,17 +57,8 @@ Only if changing a mode or upgrading — not needed for a fresh setup.
 Then **power-cycle / reboot** the flight controller so the estimator (EKF)
 reinitializes — navigation/aiding-source changes need an EKF reset.
 
-DroneBlocks customers can also apply these in the DroneBlocks web configurator
-(**Configure → Profiles**), which sets the params, saves to flash, and reboots
-in one click.
-
-## Linking to a file
-
-Raw URLs are stable, so you can link customers straight to a file:
-
-```
-https://raw.githubusercontent.com/DroneBlocks/dexi-fc-params/main/dexi-3/flight-kit.params
-```
+These can also be applied from the DroneBlocks web configurator
+(**Configure → Profiles**), which sets the params, saves to flash, and reboots in one click.
 
 ## Format
 

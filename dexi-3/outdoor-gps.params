@@ -1,11 +1,14 @@
 # QGroundControl / PX4 onboard parameters
 #
+# GENERATED from src/dexi-3.json by tools/gen-params.mjs — do not edit.
+#
 # Profile: DEXI Outdoor (GPS)  (key: outdoor-gps)
 # GPS + external-compass outdoor flight. Requires a GPS+compass module on the airframe. Proposed param set — documented here, not yet flight-validated (kept disabled until then).
 #
 # Overlay — these are the params the DEXI configurator writes for this profile.
 # Load in QGC: Vehicle Setup > Parameters > Tools > Load from file.
 # After loading, the FC reboots / power-cycle to let the EKF reinitialize.
+#
 #
 # MAV	COMP	PARAM	VALUE	TYPE
 1	1	EKF2_GPS_CTRL	7	6

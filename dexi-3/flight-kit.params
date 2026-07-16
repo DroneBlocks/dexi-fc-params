@@ -1,5 +1,7 @@
 # QGroundControl / PX4 onboard parameters
 #
+# GENERATED from src/dexi-3.json by tools/gen-params.mjs — do not edit.
+#
 # Profile: DEXI-3 Flight Kit — Complete Setup  (key: flight-kit)
 # The one file to send a Flight Kit (Build / Fly). Everything a flow position-hold drone flown by radio needs: flow-sensor link + RC + validated flight tune + indoor flow navigation. No companion computer.
 #
@@ -7,6 +9,7 @@
 # COMPLETE per-kit setup — comms + flight tune + navigation in ONE file. Load just this.
 # Load in QGC: Vehicle Setup > Parameters > Tools > Load from file.
 # After loading, the FC reboots / power-cycle to let the EKF reinitialize.
+#
 #
 # MAV	COMP	PARAM	VALUE	TYPE
 1	1	MAV_2_CONFIG	103	6
@@ -38,6 +41,7 @@
 1	1	MC_PITCHRATE_MAX	220.0	9
 1	1	MC_YAWRATE_P	0.2	9
 1	1	MC_YAWRATE_I	0.1	9
+1	1	MC_YAWRATE_D	0.0	9
 1	1	MC_YAWRATE_MAX	200.0	9
 1	1	MC_ROLL_P	6.5	9
 1	1	MC_PITCH_P	6.5	9

@@ -18,6 +18,41 @@ Files are organized by platform:
 
 ---
 
+## For DroneBlocks: this repo is the source of truth
+
+[`src/dexi-3.json`](src/dexi-3.json) **is** the DEXI parameter definition. Everything
+else is generated from it:
+
+| Consumer | How it gets the params |
+|---|---|
+| `dexi-3/*.params` (this repo, for QGC) | `node tools/gen-params.mjs` |
+| [`px4-web-configurator`](https://github.com/DroneBlocks/px4-web-configurator) | vendors `src/dexi-3.json`; `npm run params:sync` / `params:check` (CI-enforced) |
+| `droneblocks-mavlink-tool` (CLI + batch flashing) | vendors `src/dexi-3.json`; `./fetch-params.sh` |
+
+**Change a param here, then `node tools/gen-params.mjs`.** Never edit a `.params`
+by hand — `node tools/gen-params.mjs --check` fails if they're stale.
+
+Why JSON rather than `.params` as the source: a `.params` file carries only
+name/value/type. The notes explaining *why* each value is what it is, the
+category grouping, the profile metadata and the apply semantics have nowhere to
+live in that format — and the configurator needs all of it. The same param set
+has four consumers across three languages, so the source has to be
+language-neutral.
+
+This structure exists because the copies **did** diverge: this repo once carried
+an `RC_INPUT_PROTO` the configurator never had, and the CLI provisioning tool
+wrote 36 params while the configurator wrote 47 — so a batch-flashed drone and a
+browser-provisioned one were not the same aircraft.
+
+### Layout
+
+- `src/dexi-3.json` — the source of truth. `blocks` are reusable param groups
+  (comms, rc, tune, navigation…); `profiles` compose them by name.
+- `tools/gen-params.mjs` — JSON → `.params`. `--check` fails on stale output.
+- `dexi-3/*.params` — generated, committed, customer-facing.
+
+---
+
 ## DEXI-3
 
 ### Complete setup — one file per kit

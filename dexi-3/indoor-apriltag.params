@@ -1,5 +1,7 @@
 # QGroundControl / PX4 onboard parameters
 #
+# GENERATED from src/dexi-3.json by tools/gen-params.mjs — do not edit.
+#
 # Profile: DEXI Indoor (AprilTags)  (key: indoor-apriltag)
 # Adds an external-vision pose source (AprilTag or VIO) for drift-free horizontal position and yaw. Requires a companion node publishing VISION_POSITION_ESTIMATE to PX4.
 #
@@ -7,6 +9,7 @@
 # Overlay — these are the params the DEXI configurator writes for this profile.
 # Load in QGC: Vehicle Setup > Parameters > Tools > Load from file.
 # After loading, the FC reboots / power-cycle to let the EKF reinitialize.
+#
 #
 # MAV	COMP	PARAM	VALUE	TYPE
 1	1	EKF2_EV_CTRL	15	6

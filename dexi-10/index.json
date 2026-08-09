@@ -1,0 +1,26 @@
+{
+  "profiles": [
+    {
+      "key": "outdoor-gps",
+      "name": "DEXI-10 Outdoor (GPS)",
+      "file": "outdoor-gps.params",
+      "paramCount": 13,
+      "isDefault": true,
+      "selfContained": false,
+      "additive": false,
+      "comingSoon": false,
+      "description": "GPS + external-compass outdoor flight for the DEXI-10 on a Pixhawk 6X, using the dexi-gps daughterboard. Flight-validated 2026-08-09. Requires the dexi-gps on GPS2 and the CRSF receiver on TELEM3."
+    },
+    {
+      "key": "first-flight-limits",
+      "name": "DEXI-10 First-Flight Limits (optional overlay)",
+      "file": "first-flight-limits.params",
+      "paramCount": 7,
+      "isDefault": false,
+      "selfContained": false,
+      "additive": true,
+      "comingSoon": false,
+      "description": "Conservative envelope for evaluating new hardware: 5 m/s cap, a 50 m by 30 m geofence, return on RC loss, and refusing to arm without GPS. NOT part of the validated 2026-08-09 flight, which flew at stock limits. Layer on top of the outdoor-gps profile when trialling something new."
+    }
+  ]
+}

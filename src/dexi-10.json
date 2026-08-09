@@ -1,0 +1,198 @@
+{
+  "$comment": "SOURCE OF TRUTH for DEXI-10 flight-controller parameters. The .params files in dexi-10/ are GENERATED from this file by tools/gen-params.mjs. Never hand-edit them. DEXI-10 is a Pixhawk 6X and shares NO blocks with DEXI-3 (different board, different serial ports, and a DEXI-3 tune on a 10-inch airframe is a crash).",
+  "schemaVersion": 1,
+  "vehicle": "dexi-10",
+  "name": "DEXI-10",
+  "airframeId": 4019,
+  "boardId": 53,
+  "board": "px4-fmu-v6x",
+  "categoryLabels": {
+    "navigation": "Navigation",
+    "limits": "Flight limits",
+    "safety": "Safety / failsafe",
+    "peripherals": "Peripherals",
+    "comms": "Comms / links",
+    "tune": "Flight tune",
+    "rc": "RC / pilot controls"
+  },
+  "boardDefaults": {
+    "$comment": "Params true of every DEXI-10 with this board and this wiring.",
+    "blocks": ["ports"]
+  },
+  "blocks": {
+    "ports": {
+      "category": "peripherals",
+      "doc": "Serial port assignment for the Pixhawk 6X. REQUIRES this wiring: dexi-gps on the GPS2 port, CRSF receiver on TELEM3. Both are 6-pin JST-GH so the cables simply trade places. The dexi-gps CANNOT go on TELEM3: v6X TELEM pins 4/5 are CTS/RTS, not SCL/SDA, so its IST8310 compass is electrically unreachable there. Verified on hardware 2026-08-07.",
+      "params": [
+        {
+          "name": "GPS_1_CONFIG",
+          "value": 202,
+          "kind": "int",
+          "note": "GPS driver on the GPS2 port (/dev/ttyS7). This is the PRIMARY instance on the GPS2 port, so it is GPS_1_CONFIG=202, never GPS_2_CONFIG. A secondary instance never reaches the EKF."
+        },
+        {
+          "name": "RC_CRSF_PRT_CFG",
+          "value": 103,
+          "kind": "int",
+          "note": "CRSF receiver on TELEM3 (/dev/ttyS1). CRSF needs only TX/RX so a UART-only port suits it, which frees GPS2 for the GPS. NEVER set this to 0 on DEXI-10: unlike DEXI-3, this build has no rc_input driver, so crsf_rc is the only receiver driver present and 0 would disable RC entirely."
+        }
+      ]
+    },
+    "external-compass": {
+      "category": "peripherals",
+      "doc": "External magnetometer on the dexi-gps daughterboard (IST8310, I2C 0x0E, reached over the GPS2 port's I2C lines). Do NOT hardcode CAL_MAGn_ROT here: rotation is detected per-airframe by QGC compass calibration. On the first validated build it came out ROTATION_NONE with the orientation triangle to the nose and the cable out the tail.",
+      "params": [
+        {
+          "name": "EKF2_MAG_TYPE",
+          "value": 0,
+          "kind": "int",
+          "note": "Auto. The external mag on the GPS mast is clean enough outdoors."
+        },
+        {
+          "name": "SENS_MAG_AUTOROT",
+          "value": 1,
+          "kind": "int",
+          "note": "Let compass calibration detect and write CAL_MAGn_ROT. Keep this on so a new board self-detects rather than inheriting another airframe's answer."
+        },
+        {
+          "name": "SENS_EXT_I2C_PRB",
+          "value": 1,
+          "kind": "int",
+          "note": "Probe external I2C buses, which is how the IST8310 is found at all."
+        },
+        {
+          "name": "UAVCAN_SUB_MAG",
+          "value": 0,
+          "kind": "int",
+          "note": "No DroneCAN compass is fitted. Leaving this on lets a stale DroneCAN calibration slot masquerade as an enabled compass, which is what produced 'Found 0 compass (required: 1)' on 2026-08-07. Re-enable only if a DroneCAN compass is actually refitted."
+        }
+      ]
+    },
+    "outdoor-gps-nav": {
+      "category": "navigation",
+      "doc": "GPS + external compass outdoor navigation. FLIGHT-VALIDATED 2026-08-09.",
+      "params": [
+        {
+          "name": "EKF2_GPS_CTRL",
+          "value": 7,
+          "kind": "int",
+          "note": "Fuse GPS horizontal position, altitude and 3D velocity."
+        },
+        {
+          "name": "EKF2_HGT_REF",
+          "value": 1,
+          "kind": "int",
+          "note": "GPS as the primary height reference."
+        },
+        {
+          "name": "EKF2_BARO_CTRL",
+          "value": 1,
+          "kind": "int",
+          "note": "Keep baro fused alongside GPS height."
+        },
+        {
+          "name": "EKF2_GPS_CHECK",
+          "value": 1023,
+          "kind": "int",
+          "note": "All pre-flight GNSS quality checks on. Worth keeping strict while a new GPS board is under evaluation. If Position mode will not engage, read estimator_gps_status to see WHICH check fails rather than lowering the bar; a failing max_pdop with everything else passing means poor sky view, not a bad param."
+        },
+        {
+          "name": "EKF2_EV_CTRL",
+          "value": 0,
+          "kind": "int",
+          "note": "No external vision outdoors."
+        },
+        {
+          "name": "EKF2_OF_CTRL",
+          "value": 0,
+          "kind": "int",
+          "note": "No optical flow outdoors."
+        },
+        {
+          "name": "EKF2_RNG_CTRL",
+          "value": 0,
+          "kind": "int",
+          "note": "No range-finder aiding outdoors."
+        }
+      ]
+    },
+    "first-flight-limits": {
+      "category": "limits",
+      "doc": "Conservative envelope for evaluating new hardware. NOT part of the 2026-08-09 validated flight, which flew at stock limits. Layer this on deliberately.",
+      "params": [
+        {
+          "name": "COM_ARM_WO_GPS",
+          "value": 0,
+          "kind": "int",
+          "note": "Refuse to arm without a GPS fix, so you cannot test-fly without the sensor under test. Also blocks bench arming."
+        },
+        {
+          "name": "COM_POS_FS_EPH",
+          "value": 5.0,
+          "kind": "float"
+        },
+        {
+          "name": "MPC_XY_VEL_MAX",
+          "value": 5.0,
+          "kind": "float",
+          "note": "Down from the stock 12 m/s while a new GPS board is being evaluated."
+        },
+        {
+          "name": "GF_ACTION",
+          "value": 2,
+          "kind": "int",
+          "note": "Hold on geofence breach."
+        },
+        {
+          "name": "GF_MAX_HOR_DIST",
+          "value": 50.0,
+          "kind": "float"
+        },
+        {
+          "name": "GF_MAX_VER_DIST",
+          "value": 30.0,
+          "kind": "float"
+        },
+        {
+          "name": "NAV_RCL_ACT",
+          "value": 2,
+          "kind": "int",
+          "note": "Return on RC loss."
+        }
+      ]
+    }
+  },
+  "profiles": [
+    {
+      "key": "outdoor-gps",
+      "name": "DEXI-10 Outdoor (GPS)",
+      "description": "GPS + external-compass outdoor flight for the DEXI-10 on a Pixhawk 6X, using the dexi-gps daughterboard. Flight-validated 2026-08-09. Requires the dexi-gps on GPS2 and the CRSF receiver on TELEM3.",
+      "airframeIds": [4019],
+      "isDefault": true,
+      "comingSoon": false,
+      "blocks": ["ports", "external-compass", "outdoor-gps-nav"],
+      "details": [
+        "Ports: GPS on GPS2 (GPS_1_CONFIG = 202), CRSF receiver on TELEM3 (RC_CRSF_PRT_CFG = 103)",
+        "Horizontal + height: GPS (EKF2_GPS_CTRL = 7, EKF2_HGT_REF = 1)",
+        "Heading: external IST8310 on the dexi-gps board (EKF2_MAG_TYPE = 0)",
+        "Indoor aiding off: optical flow, external vision and range all disabled",
+        "Run QGC compass calibration after fitting the board; rotation is detected, not hardcoded",
+        "Does NOT set a flight tune or an RC map. The 4019 airframe supplies the tune."
+      ]
+    },
+    {
+      "key": "first-flight-limits",
+      "name": "DEXI-10 First-Flight Limits (optional overlay)",
+      "description": "Conservative envelope for evaluating new hardware: 5 m/s cap, a 50 m by 30 m geofence, return on RC loss, and refusing to arm without GPS. NOT part of the validated 2026-08-09 flight, which flew at stock limits. Layer on top of the outdoor-gps profile when trialling something new.",
+      "airframeIds": [4019],
+      "additive": true,
+      "comingSoon": false,
+      "blocks": ["first-flight-limits"],
+      "details": [
+        "Additive: sets only the params listed, on top of your current config",
+        "COM_ARM_WO_GPS = 0 also blocks bench arming, so remove it for indoor work",
+        "Not flight-validated as a set; each value is a deliberate reduction from stock"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+# QGroundControl / PX4 onboard parameters
+#
+# GENERATED from src/dexi-10.json by tools/gen-params.mjs — do not edit.
+#
+# Profile: DEXI-10 Outdoor (GPS) — Complete Setup  (key: outdoor-gps)
+# Plug in the dexi-gps, flash this, go. GPS + external-compass outdoor flight for the DEXI-10 on a Pixhawk 6X, exactly as flight-validated on 2026-08-09. Includes the RC map, so a pilot always has a 3-position mode switch to leave Position hold and a kill switch. Requires the dexi-gps on GPS2 and the CRSF receiver on TELEM3.
+#
+# Valid airframes (SYS_AUTOSTART): 4019
+# COMPLETE per-kit setup — comms + flight tune + navigation in ONE file. Load just this.
+# Load in QGC: Vehicle Setup > Parameters > Tools > Load from file.
+# After loading, the FC reboots / power-cycle to let the EKF reinitialize.
+#
+#
+# MAV	COMP	PARAM	VALUE	TYPE
+1	1	GPS_1_CONFIG	202	6
+1	1	RC_CRSF_PRT_CFG	103	6
+1	1	RC_MAP_ROLL	1	6
+1	1	RC_MAP_PITCH	2	6
+1	1	RC_MAP_THROTTLE	3	6
+1	1	RC_MAP_YAW	4	6
+1	1	RC_MAP_ARM_SW	5	6
+1	1	COM_ARM_SWISBTN	0	6
+1	1	RC_ARMSWITCH_TH	0.75	9
+1	1	RC_MAP_FLTMODE	6	6
+1	1	RC_MAP_KILL_SW	8	6
+1	1	RC_KILLSWITCH_TH	0.75	9
+1	1	COM_FLTMODE1	8	6
+1	1	COM_FLTMODE2	-1	6
+1	1	COM_FLTMODE3	-1	6
+1	1	COM_FLTMODE4	1	6
+1	1	COM_FLTMODE5	-1	6
+1	1	COM_FLTMODE6	2	6
+1	1	EKF2_MAG_TYPE	0	6
+1	1	SENS_MAG_AUTOROT	1	6
+1	1	SENS_EXT_I2C_PRB	1	6
+1	1	UAVCAN_SUB_MAG	0	6
+1	1	EKF2_GPS_CTRL	7	6
+1	1	EKF2_HGT_REF	1	6
+1	1	EKF2_BARO_CTRL	1	6
+1	1	EKF2_GPS_CHECK	1023	6
+1	1	EKF2_EV_CTRL	0	6
+1	1	EKF2_OF_CTRL	0	6
+1	1	EKF2_RNG_CTRL	0	6
+1	1	COM_ARM_WO_GPS	1	6

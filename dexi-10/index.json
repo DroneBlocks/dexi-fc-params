@@ -1,0 +1,15 @@
+{
+  "profiles": [
+    {
+      "key": "outdoor-gps",
+      "name": "DEXI-10 Outdoor (GPS) — Complete Setup",
+      "file": "outdoor-gps.params",
+      "paramCount": 30,
+      "isDefault": true,
+      "selfContained": true,
+      "additive": false,
+      "comingSoon": false,
+      "description": "Plug in the dexi-gps, flash this, go. GPS + external-compass outdoor flight for the DEXI-10 on a Pixhawk 6X, exactly as flight-validated on 2026-08-09. Includes the RC map, so a pilot always has a 3-position mode switch to leave Position hold and a kill switch. Requires the dexi-gps on GPS2 and the CRSF receiver on TELEM3."
+    }
+  ]
+}

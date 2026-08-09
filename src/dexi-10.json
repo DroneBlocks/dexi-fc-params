@@ -1,0 +1,216 @@
+{
+  "$comment": "SOURCE OF TRUTH for DEXI-10 flight-controller parameters. The .params files in dexi-10/ are GENERATED from this file by tools/gen-params.mjs. Never hand-edit them. DEXI-10 is a Pixhawk 6X and shares NO blocks with DEXI-3 (different board, different serial ports, and a DEXI-3 tune on a 10-inch airframe is a crash).",
+  "schemaVersion": 1,
+  "vehicle": "dexi-10",
+  "name": "DEXI-10",
+  "airframeId": 4019,
+  "boardId": 53,
+  "board": "px4-fmu-v6x",
+  "categoryLabels": {
+    "navigation": "Navigation",
+    "limits": "Flight limits",
+    "safety": "Safety / failsafe",
+    "peripherals": "Peripherals",
+    "comms": "Comms / links",
+    "tune": "Flight tune",
+    "rc": "RC / pilot controls"
+  },
+  "boardDefaults": {
+    "$comment": "Params true of every DEXI-10 with this board and this wiring.",
+    "blocks": ["ports", "rc"]
+  },
+  "blocks": {
+    "ports": {
+      "category": "peripherals",
+      "doc": "Serial port assignment for the Pixhawk 6X. REQUIRES this wiring: dexi-gps on the GPS2 port, CRSF receiver on TELEM3. Both are 6-pin JST-GH so the cables simply trade places. The dexi-gps CANNOT go on TELEM3: v6X TELEM pins 4/5 are CTS/RTS, not SCL/SDA, so its IST8310 compass is electrically unreachable there. Verified on hardware 2026-08-07.",
+      "params": [
+        {
+          "name": "GPS_1_CONFIG",
+          "value": 202,
+          "kind": "int",
+          "note": "GPS driver on the GPS2 port (/dev/ttyS7). This is the PRIMARY instance on the GPS2 port, so it is GPS_1_CONFIG=202, never GPS_2_CONFIG. A secondary instance never reaches the EKF."
+        },
+        {
+          "name": "RC_CRSF_PRT_CFG",
+          "value": 103,
+          "kind": "int",
+          "note": "CRSF receiver on TELEM3 (/dev/ttyS1). CRSF needs only TX/RX so a UART-only port suits it, which frees GPS2 for the GPS. NEVER set this to 0 on DEXI-10: unlike DEXI-3, this build has no rc_input driver, so crsf_rc is the only receiver driver present and 0 would disable RC entirely."
+        }
+      ]
+    },
+    "rc": {
+      "category": "rc",
+      "doc": "Pilot authority. This block is what makes the profile safe to hand to someone: a 3-position mode switch to leave Position hold, and a kill switch. Without it a freshly flashed aircraft has NO mode or kill switch. That is not hypothetical: DEXI-3 shipped exactly that way when one provisioning path skipped the RC map.",
+      "params": [
+        { "name": "RC_MAP_ROLL", "value": 1, "kind": "int" },
+        { "name": "RC_MAP_PITCH", "value": 2, "kind": "int" },
+        { "name": "RC_MAP_THROTTLE", "value": 3, "kind": "int" },
+        { "name": "RC_MAP_YAW", "value": 4, "kind": "int" },
+        {
+          "name": "RC_MAP_ARM_SW",
+          "value": 5,
+          "kind": "int",
+          "note": "CH5 arm switch."
+        },
+        {
+          "name": "COM_ARM_SWISBTN",
+          "value": 0,
+          "kind": "int",
+          "note": "The arm switch is a 2-position toggle, not a momentary button."
+        },
+        {
+          "name": "RC_ARMSWITCH_TH",
+          "value": 0.75,
+          "kind": "float",
+          "note": "Asserted so a freshly flashed aircraft arms deterministically instead of inheriting a stray threshold."
+        },
+        {
+          "name": "RC_MAP_FLTMODE",
+          "value": 6,
+          "kind": "int",
+          "note": "CH6 3-position mode switch. This is the pilot's primary takeover: drop out of Position into Altitude or Stabilized."
+        },
+        {
+          "name": "RC_MAP_KILL_SW",
+          "value": 8,
+          "kind": "int",
+          "note": "CH8 kill switch. The last-resort takeover. Omitting this is what leaves a drone with no way to stop the motors."
+        },
+        {
+          "name": "RC_KILLSWITCH_TH",
+          "value": 0.75,
+          "kind": "float",
+          "note": "Asserted so kill behaviour is deterministic on a freshly flashed aircraft."
+        },
+        {
+          "name": "COM_FLTMODE1",
+          "value": 8,
+          "kind": "int",
+          "note": "Switch DOWN = Stabilized. PX4 splits the mode channel into 6 slots and a 3-position switch lands on slots 1/4/6, NOT 1/2/3. Filling 1/2/3 leaves the middle and top positions dead, which would strand a pilot in Position hold."
+        },
+        { "name": "COM_FLTMODE2", "value": -1, "kind": "int" },
+        { "name": "COM_FLTMODE3", "value": -1, "kind": "int" },
+        {
+          "name": "COM_FLTMODE4",
+          "value": 1,
+          "kind": "int",
+          "note": "Switch CENTRE = Altitude."
+        },
+        { "name": "COM_FLTMODE5", "value": -1, "kind": "int" },
+        {
+          "name": "COM_FLTMODE6",
+          "value": 2,
+          "kind": "int",
+          "note": "Switch UP = Position. This is the mode the 2026-08-09 validation flight flew."
+        }
+      ]
+    },
+    "external-compass": {
+      "category": "peripherals",
+      "doc": "External magnetometer on the dexi-gps daughterboard (IST8310, I2C 0x0E, reached over the GPS2 port's I2C lines). Do NOT hardcode CAL_MAGn_ROT here: rotation is detected per-airframe by QGC compass calibration. On the first validated build it came out ROTATION_NONE with the orientation triangle to the nose and the cable out the tail.",
+      "params": [
+        {
+          "name": "EKF2_MAG_TYPE",
+          "value": 0,
+          "kind": "int",
+          "note": "Auto. The external mag on the GPS mast is clean enough outdoors."
+        },
+        {
+          "name": "SENS_MAG_AUTOROT",
+          "value": 1,
+          "kind": "int",
+          "note": "Let compass calibration detect and write CAL_MAGn_ROT. Keep this on so a new board self-detects rather than inheriting another airframe's answer."
+        },
+        {
+          "name": "SENS_EXT_I2C_PRB",
+          "value": 1,
+          "kind": "int",
+          "note": "Probe external I2C buses, which is how the IST8310 is found at all."
+        },
+        {
+          "name": "UAVCAN_SUB_MAG",
+          "value": 0,
+          "kind": "int",
+          "note": "No DroneCAN compass is fitted. Leaving this on lets a stale DroneCAN calibration slot masquerade as an enabled compass, which is what produced 'Found 0 compass (required: 1)' on 2026-08-07. Re-enable only if a DroneCAN compass is actually refitted."
+        }
+      ]
+    },
+    "outdoor-gps-nav": {
+      "category": "navigation",
+      "doc": "GPS + external compass outdoor navigation, exactly as flown on 2026-08-09. Deliberately carries NO geofence and NO reduced speed limits. This is a validation and testing configuration: the pilot is the safety system, via the mode and kill switches in the rc block.",
+      "params": [
+        {
+          "name": "EKF2_GPS_CTRL",
+          "value": 7,
+          "kind": "int",
+          "note": "Fuse GPS horizontal position, altitude and 3D velocity. This is what makes Position hold work."
+        },
+        {
+          "name": "EKF2_HGT_REF",
+          "value": 1,
+          "kind": "int",
+          "note": "GPS as the primary height reference."
+        },
+        {
+          "name": "EKF2_BARO_CTRL",
+          "value": 1,
+          "kind": "int",
+          "note": "Keep baro fused alongside GPS height."
+        },
+        {
+          "name": "EKF2_GPS_CHECK",
+          "value": 1023,
+          "kind": "int",
+          "note": "All pre-flight GNSS quality checks on. If Position mode will not engage, read estimator_gps_status to see WHICH check fails rather than lowering the bar; a lone max_pdop failure with everything else passing means poor sky view, not a bad param."
+        },
+        {
+          "name": "EKF2_EV_CTRL",
+          "value": 0,
+          "kind": "int",
+          "note": "No external vision outdoors."
+        },
+        {
+          "name": "EKF2_OF_CTRL",
+          "value": 0,
+          "kind": "int",
+          "note": "No optical flow outdoors."
+        },
+        {
+          "name": "EKF2_RNG_CTRL",
+          "value": 0,
+          "kind": "int",
+          "note": "No range-finder aiding outdoors."
+        },
+        {
+          "name": "COM_ARM_WO_GPS",
+          "value": 1,
+          "kind": "int",
+          "note": "Deliberately permissive, and it matches what flew. Arming is NOT blocked on a GPS fix, so the aircraft can still be armed in Stabilized or Altitude on the bench or without sky view. This cannot get you airborne in Position on a bad fix: Position mode independently requires a valid position estimate before PX4 will enter it."
+        }
+      ]
+    }
+  },
+  "profiles": [
+    {
+      "key": "outdoor-gps",
+      "name": "DEXI-10 Outdoor (GPS) — Complete Setup",
+      "description": "Plug in the dexi-gps, flash this, go. GPS + external-compass outdoor flight for the DEXI-10 on a Pixhawk 6X, exactly as flight-validated on 2026-08-09. Includes the RC map, so a pilot always has a 3-position mode switch to leave Position hold and a kill switch. Requires the dexi-gps on GPS2 and the CRSF receiver on TELEM3.",
+      "airframeIds": [4019],
+      "isDefault": true,
+      "selfContained": true,
+      "comingSoon": false,
+      "blocks": ["ports", "rc", "external-compass", "outdoor-gps-nav"],
+      "details": [
+        "Ports: GPS on GPS2 (GPS_1_CONFIG = 202), CRSF receiver on TELEM3 (RC_CRSF_PRT_CFG = 103)",
+        "Pilot authority: CH6 3-position mode switch (down Stabilized / centre Altitude / up Position) and CH8 kill switch",
+        "Horizontal + height: GPS (EKF2_GPS_CTRL = 7, EKF2_HGT_REF = 1) for Position hold",
+        "Heading: external IST8310 on the dexi-gps board (EKF2_MAG_TYPE = 0)",
+        "Indoor aiding off: optical flow, external vision and range all disabled",
+        "NO geofence and NO reduced speed limits. Validation and testing config; the pilot is the safety system",
+        "Arming is not blocked on GPS (COM_ARM_WO_GPS = 1), so Stabilized bench work still works",
+        "Run QGC compass calibration after fitting the board; rotation is detected, not hardcoded",
+        "Flight tune comes from the 4019 airframe, so this profile does not set one"
+      ]
+    }
+  ]
+}

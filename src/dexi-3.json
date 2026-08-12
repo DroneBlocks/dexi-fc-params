@@ -167,6 +167,12 @@
           "note": "FC mounted Yaw 45 in the DEXI-3 frame"
         },
         {
+          "name": "SENS_FLOW_ROT",
+          "value": 4,
+          "kind": "int",
+          "note": "UP-T201 flow module mounted Yaw 180 in the DEXI-3 frame \u2014 at 0 the flow vector is inverted, the EKF gates it out and Position/Altitude go unstable while Stabilized flies fine"
+        },
+        {
           "name": "MC_AIRMODE",
           "value": 0,
           "kind": "int",

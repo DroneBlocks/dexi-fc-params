@@ -37,7 +37,7 @@
       "key": "flight-kit",
       "name": "DEXI-3 Flight Kit — Complete Setup",
       "file": "flight-kit.params",
-      "paramCount": 49,
+      "paramCount": 48,
       "isDefault": false,
       "selfContained": true,
       "additive": false,

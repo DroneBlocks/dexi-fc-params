@@ -1,0 +1,73 @@
+# QGroundControl / PX4 onboard parameters
+#
+# GENERATED from src/dexi-10.json by tools/gen-params.mjs — do not edit.
+#
+# Profile: DEXI-10 AVR Indoor (H-Flow) — Complete Setup  (key: avr-indoor-flow)
+# Base parameter set for AVR 2026 teams. Indoor, GPS-denied flight on the Holybro H-Flow (DroneCAN), PX4 1.16.2 on the Pixhawk 6X, transcribed from the DroneBlocks reference aircraft on 2026-09-29. Includes the RC map (CH5 arm, CH6 3-position mode switch, CH7 kill). Calibration is not included: run accel, gyro, level and RC calibration on each aircraft after loading.
+#
+# Valid airframes (SYS_AUTOSTART): 4019
+# COMPLETE per-kit setup — comms + flight tune + navigation in ONE file. Load just this.
+# Load in QGC: Vehicle Setup > Parameters > Tools > Load from file.
+# After loading, the FC reboots / power-cycle to let the EKF reinitialize.
+#
+#
+# MAV	COMP	PARAM	VALUE	TYPE
+1	1	RC_PORT_CONFIG	103	6
+1	1	RC_INPUT_PROTO	6	6
+1	1	GPS_1_CONFIG	0	6
+1	1	SER_TEL1_BAUD	500000	6
+1	1	MAV_0_RATE	0	6
+1	1	UXRCE_DDS_CFG	102	6
+1	1	PWM_MAIN_FUNC1	101	6
+1	1	PWM_MAIN_FUNC2	103	6
+1	1	PWM_MAIN_FUNC3	104	6
+1	1	PWM_MAIN_FUNC4	102	6
+1	1	PWM_MAIN_MIN1	1100	6
+1	1	PWM_MAIN_MIN2	1100	6
+1	1	PWM_MAIN_MIN3	1100	6
+1	1	PWM_MAIN_MIN4	1100	6
+1	1	PWM_MAIN_MAX1	1900	6
+1	1	PWM_MAIN_MAX2	1900	6
+1	1	PWM_MAIN_MAX3	1900	6
+1	1	PWM_MAIN_MAX4	1900	6
+1	1	PWM_AUX_FUNC1	101	6
+1	1	PWM_AUX_FUNC2	102	6
+1	1	PWM_AUX_FUNC3	103	6
+1	1	PWM_AUX_FUNC4	104	6
+1	1	PWM_AUX_TIM0	-4	6
+1	1	RC_MAP_ROLL	1	6
+1	1	RC_MAP_PITCH	2	6
+1	1	RC_MAP_THROTTLE	3	6
+1	1	RC_MAP_YAW	4	6
+1	1	RC_MAP_ARM_SW	5	6
+1	1	COM_ARM_SWISBTN	0	6
+1	1	RC_ARMSWITCH_TH	0.75	9
+1	1	RC_MAP_FLTMODE	6	6
+1	1	RC_MAP_KILL_SW	7	6
+1	1	RC_KILLSWITCH_TH	0.75	9
+1	1	COM_FLTMODE1	8	6
+1	1	COM_FLTMODE2	-1	6
+1	1	COM_FLTMODE3	-1	6
+1	1	COM_FLTMODE4	1	6
+1	1	COM_FLTMODE5	-1	6
+1	1	COM_FLTMODE6	2	6
+1	1	MAN_ARM_GESTURE	0	6
+1	1	BAT1_N_CELLS	4	6
+1	1	BAT1_CAPACITY	5200.0	9
+1	1	UAVCAN_SUB_FLOW	1	6
+1	1	UAVCAN_SUB_RNG	1	6
+1	1	UAVCAN_RNG_MIN	0.08	9
+1	1	UAVCAN_SUB_GPS	0	6
+1	1	UAVCAN_SUB_MAG	0	6
+1	1	EKF2_GPS_CTRL	0	6
+1	1	EKF2_HGT_REF	2	6
+1	1	EKF2_RNG_CTRL	2	6
+1	1	EKF2_RNG_A_HMAX	10.0	9
+1	1	EKF2_BARO_CTRL	0	6
+1	1	EKF2_OF_CTRL	1	6
+1	1	EKF2_EV_CTRL	0	6
+1	1	SYS_HAS_MAG	0	6
+1	1	COM_ARM_WO_GPS	1	6
+1	1	MPC_XY_VEL_MAX	8.0	9
+1	1	MPC_VEL_MANUAL	8.0	9
+1	1	MPC_LAND_SPEED	0.35	9

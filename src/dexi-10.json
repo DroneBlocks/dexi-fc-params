@@ -356,14 +356,8 @@
     },
     "rc-avr": {
       "category": "rc",
-      "doc": "Overrides applied on top of the rc block for the AVR aircraft.",
+      "doc": "Overrides applied on top of the rc block for the AVR aircraft. The kill switch stays on CH8 from the rc block.",
       "params": [
-        {
-          "name": "RC_MAP_KILL_SW",
-          "value": 7,
-          "kind": "int",
-          "note": "CH7 on the AVR reference aircraft (the outdoor profile uses CH8). Verify against the EdgeTX model before flight."
-        },
         {
           "name": "MAN_ARM_GESTURE",
           "value": 0,
@@ -527,7 +521,7 @@
     {
       "key": "avr-indoor-flow",
       "name": "DEXI-10 AVR Indoor (H-Flow) — Complete Setup",
-      "description": "Base parameter set for AVR 2026 teams. Indoor, GPS-denied flight on the Holybro H-Flow (DroneCAN), PX4 1.16.2 on the Pixhawk 6X, transcribed from the DroneBlocks reference aircraft on 2026-09-29. Includes the RC map (CH5 arm, CH6 3-position mode switch, CH7 kill). Calibration is not included: run accel, gyro, level and RC calibration on each aircraft after loading.",
+      "description": "Base parameter set for AVR 2026 teams. Indoor, GPS-denied flight on the Holybro H-Flow (DroneCAN), PX4 1.16.2 on the Pixhawk 6X, transcribed from the DroneBlocks reference aircraft on 2026-09-29. Includes the RC map (CH5 arm, CH6 3-position mode switch, CH8 kill). Calibration is not included: run accel, gyro, level and RC calibration on each aircraft after loading.",
       "airframeIds": [
         4019
       ],
@@ -545,7 +539,7 @@
       ],
       "details": [
         "Ports: CRSF receiver on TELEM3 (RC_PORT_CONFIG = 103, RC_INPUT_PROTO = 6), no GPS, MAVLink on TELEM1, XRCE-DDS on TELEM2",
-        "Pilot authority: CH5 arm, CH6 3-position mode switch (down Stabilized / center Altitude / up Position), CH7 kill switch, stick arming gesture off",
+        "Pilot authority: CH5 arm, CH6 3-position mode switch (down Stabilized / center Altitude / up Position), CH8 kill switch, stick arming gesture off",
         "Position: H-Flow optical flow + rangefinder over DroneCAN (UAVCAN_SUB_FLOW / UAVCAN_SUB_RNG = 1, EKF2_OF_CTRL = 1, EKF2_HGT_REF = 2)",
         "Baro fusion and GPS fusion off, no compass required (SYS_HAS_MAG = 0)",
         "Motors: MAIN 1-4 PWM 1100-1900, AUX 1-4 DShot300",

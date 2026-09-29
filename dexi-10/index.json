@@ -20,7 +20,7 @@
       "selfContained": true,
       "additive": false,
       "comingSoon": false,
-      "description": "Base parameter set for AVR 2026 teams. Indoor, GPS-denied flight on the Holybro H-Flow (DroneCAN), PX4 1.16.2 on the Pixhawk 6X, transcribed from the DroneBlocks reference aircraft on 2026-09-29. Includes the RC map (CH5 arm, CH6 3-position mode switch, CH7 kill). Calibration is not included: run accel, gyro, level and RC calibration on each aircraft after loading."
+      "description": "Base parameter set for AVR 2026 teams. Indoor, GPS-denied flight on the Holybro H-Flow (DroneCAN), PX4 1.16.2 on the Pixhawk 6X, transcribed from the DroneBlocks reference aircraft on 2026-09-29. Includes the RC map (CH5 arm, CH6 3-position mode switch, CH8 kill). Calibration is not included: run accel, gyro, level and RC calibration on each aircraft after loading."
     }
   ]
 }

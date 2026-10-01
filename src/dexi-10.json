@@ -17,7 +17,10 @@
   },
   "boardDefaults": {
     "$comment": "Params true of every DEXI-10 with this board and this wiring.",
-    "blocks": ["ports", "rc"]
+    "blocks": [
+      "ports",
+      "rc"
+    ]
   },
   "blocks": {
     "ports": {
@@ -42,10 +45,26 @@
       "category": "rc",
       "doc": "Pilot authority. This block is what makes the profile safe to hand to someone: a 3-position mode switch to leave Position hold, and a kill switch. Without it a freshly flashed aircraft has NO mode or kill switch. That is not hypothetical: DEXI-3 shipped exactly that way when one provisioning path skipped the RC map.",
       "params": [
-        { "name": "RC_MAP_ROLL", "value": 1, "kind": "int" },
-        { "name": "RC_MAP_PITCH", "value": 2, "kind": "int" },
-        { "name": "RC_MAP_THROTTLE", "value": 3, "kind": "int" },
-        { "name": "RC_MAP_YAW", "value": 4, "kind": "int" },
+        {
+          "name": "RC_MAP_ROLL",
+          "value": 1,
+          "kind": "int"
+        },
+        {
+          "name": "RC_MAP_PITCH",
+          "value": 2,
+          "kind": "int"
+        },
+        {
+          "name": "RC_MAP_THROTTLE",
+          "value": 3,
+          "kind": "int"
+        },
+        {
+          "name": "RC_MAP_YAW",
+          "value": 4,
+          "kind": "int"
+        },
         {
           "name": "RC_MAP_ARM_SW",
           "value": 5,
@@ -88,15 +107,27 @@
           "kind": "int",
           "note": "Switch DOWN = Stabilized. PX4 splits the mode channel into 6 slots and a 3-position switch lands on slots 1/4/6, NOT 1/2/3. Filling 1/2/3 leaves the middle and top positions dead, which would strand a pilot in Position hold."
         },
-        { "name": "COM_FLTMODE2", "value": -1, "kind": "int" },
-        { "name": "COM_FLTMODE3", "value": -1, "kind": "int" },
+        {
+          "name": "COM_FLTMODE2",
+          "value": -1,
+          "kind": "int"
+        },
+        {
+          "name": "COM_FLTMODE3",
+          "value": -1,
+          "kind": "int"
+        },
         {
           "name": "COM_FLTMODE4",
           "value": 1,
           "kind": "int",
           "note": "Switch CENTRE = Altitude."
         },
-        { "name": "COM_FLTMODE5", "value": -1, "kind": "int" },
+        {
+          "name": "COM_FLTMODE5",
+          "value": -1,
+          "kind": "int"
+        },
         {
           "name": "COM_FLTMODE6",
           "value": 2,
@@ -188,6 +219,274 @@
           "note": "Deliberately permissive, and it matches what flew. Arming is NOT blocked on a GPS fix, so the aircraft can still be armed in Stabilized or Altitude on the bench or without sky view. This cannot get you airborne in Position on a bad fix: Position mode independently requires a valid position estimate before PX4 will enter it."
         }
       ]
+    },
+    "ports-avr": {
+      "category": "peripherals",
+      "doc": "Serial ports for the AVR build on PX4 1.16.2 (stable). This build ships the legacy rc_input driver, so the receiver is configured with RC_PORT_CONFIG / RC_INPUT_PROTO rather than RC_CRSF_PRT_CFG (which does not exist in it). No GPS. TELEM1 = MAVLink to the Pi (mavlink-router/QGC), TELEM2 = micro-XRCE-DDS.",
+      "params": [
+        {
+          "name": "RC_PORT_CONFIG",
+          "value": 103,
+          "kind": "int",
+          "note": "CRSF receiver on TELEM3 (/dev/ttyS1)."
+        },
+        {
+          "name": "RC_INPUT_PROTO",
+          "value": 6,
+          "kind": "int",
+          "note": "CRSF."
+        },
+        {
+          "name": "GPS_1_CONFIG",
+          "value": 0,
+          "kind": "int",
+          "note": "No GPS on the indoor build."
+        },
+        {
+          "name": "SER_TEL1_BAUD",
+          "value": 500000,
+          "kind": "int",
+          "note": "MAVLink to the Compute HAT UART0."
+        },
+        {
+          "name": "MAV_0_RATE",
+          "value": 0,
+          "kind": "int",
+          "note": "Default rate for the TELEM1 MAVLink instance (half the baud)."
+        },
+        {
+          "name": "UXRCE_DDS_CFG",
+          "value": 102,
+          "kind": "int",
+          "note": "micro-XRCE-DDS on TELEM2 for ROS 2."
+        }
+      ]
+    },
+    "motors": {
+      "category": "peripherals",
+      "doc": "Motor outputs as configured on the AVR reference aircraft (Holybro X500 V2, BLHeli_S 20A). MAIN (IO) outputs 1-4 are PWM 1100-1900 in the 4019 motor order; AUX (FMU) outputs 1-4 are also assigned as motors at DShot300. Transcribed as-is from the aircraft.",
+      "params": [
+        {
+          "name": "PWM_MAIN_FUNC1",
+          "value": 101,
+          "kind": "int"
+        },
+        {
+          "name": "PWM_MAIN_FUNC2",
+          "value": 103,
+          "kind": "int"
+        },
+        {
+          "name": "PWM_MAIN_FUNC3",
+          "value": 104,
+          "kind": "int"
+        },
+        {
+          "name": "PWM_MAIN_FUNC4",
+          "value": 102,
+          "kind": "int"
+        },
+        {
+          "name": "PWM_MAIN_MIN1",
+          "value": 1100,
+          "kind": "int"
+        },
+        {
+          "name": "PWM_MAIN_MIN2",
+          "value": 1100,
+          "kind": "int"
+        },
+        {
+          "name": "PWM_MAIN_MIN3",
+          "value": 1100,
+          "kind": "int"
+        },
+        {
+          "name": "PWM_MAIN_MIN4",
+          "value": 1100,
+          "kind": "int"
+        },
+        {
+          "name": "PWM_MAIN_MAX1",
+          "value": 1900,
+          "kind": "int"
+        },
+        {
+          "name": "PWM_MAIN_MAX2",
+          "value": 1900,
+          "kind": "int"
+        },
+        {
+          "name": "PWM_MAIN_MAX3",
+          "value": 1900,
+          "kind": "int"
+        },
+        {
+          "name": "PWM_MAIN_MAX4",
+          "value": 1900,
+          "kind": "int"
+        },
+        {
+          "name": "PWM_AUX_FUNC1",
+          "value": 101,
+          "kind": "int"
+        },
+        {
+          "name": "PWM_AUX_FUNC2",
+          "value": 102,
+          "kind": "int"
+        },
+        {
+          "name": "PWM_AUX_FUNC3",
+          "value": 103,
+          "kind": "int"
+        },
+        {
+          "name": "PWM_AUX_FUNC4",
+          "value": 104,
+          "kind": "int"
+        },
+        {
+          "name": "PWM_AUX_TIM0",
+          "value": -4,
+          "kind": "int",
+          "note": "DShot300 on the AUX timer group."
+        }
+      ]
+    },
+    "rc-avr": {
+      "category": "rc",
+      "doc": "Overrides applied on top of the rc block for the AVR aircraft. The kill switch stays on CH8 from the rc block.",
+      "params": [
+        {
+          "name": "MAN_ARM_GESTURE",
+          "value": 0,
+          "kind": "int",
+          "note": "Stick arming gesture disabled; arm only via the CH5 switch."
+        }
+      ]
+    },
+    "battery": {
+      "category": "safety",
+      "doc": "4S 5200 mAh LiPo.",
+      "params": [
+        {
+          "name": "BAT1_N_CELLS",
+          "value": 4,
+          "kind": "int"
+        },
+        {
+          "name": "BAT1_CAPACITY",
+          "value": 5200,
+          "kind": "float",
+          "note": "mAh."
+        }
+      ]
+    },
+    "indoor-flow-nav": {
+      "category": "navigation",
+      "doc": "Indoor, GPS-denied navigation on the Holybro H-Flow (optical flow + rangefinder over DroneCAN, node 125). Height reference is the rangefinder, baro fusion off, no compass.",
+      "params": [
+        {
+          "name": "UAVCAN_SUB_FLOW",
+          "value": 1,
+          "kind": "int",
+          "note": "H-Flow optical flow over DroneCAN."
+        },
+        {
+          "name": "UAVCAN_SUB_RNG",
+          "value": 1,
+          "kind": "int",
+          "note": "H-Flow rangefinder over DroneCAN."
+        },
+        {
+          "name": "UAVCAN_RNG_MIN",
+          "value": 0.08,
+          "kind": "float"
+        },
+        {
+          "name": "UAVCAN_SUB_GPS",
+          "value": 0,
+          "kind": "int"
+        },
+        {
+          "name": "UAVCAN_SUB_MAG",
+          "value": 0,
+          "kind": "int"
+        },
+        {
+          "name": "EKF2_GPS_CTRL",
+          "value": 0,
+          "kind": "int",
+          "note": "No GPS fusion."
+        },
+        {
+          "name": "EKF2_HGT_REF",
+          "value": 2,
+          "kind": "int",
+          "note": "Rangefinder is the height reference."
+        },
+        {
+          "name": "EKF2_RNG_CTRL",
+          "value": 2,
+          "kind": "int",
+          "note": "Range fusion always on."
+        },
+        {
+          "name": "EKF2_RNG_A_HMAX",
+          "value": 10,
+          "kind": "float"
+        },
+        {
+          "name": "EKF2_BARO_CTRL",
+          "value": 0,
+          "kind": "int",
+          "note": "Baro fusion off indoors."
+        },
+        {
+          "name": "EKF2_OF_CTRL",
+          "value": 1,
+          "kind": "int",
+          "note": "Optical flow fusion on."
+        },
+        {
+          "name": "EKF2_EV_CTRL",
+          "value": 0,
+          "kind": "int"
+        },
+        {
+          "name": "SYS_HAS_MAG",
+          "value": 0,
+          "kind": "int",
+          "note": "No compass required; the internal BMM150 is not part of the preflight check."
+        },
+        {
+          "name": "COM_ARM_WO_GPS",
+          "value": 1,
+          "kind": "int"
+        }
+      ]
+    },
+    "indoor-limits": {
+      "category": "limits",
+      "doc": "Speed limits as configured on the AVR reference aircraft.",
+      "params": [
+        {
+          "name": "MPC_XY_VEL_MAX",
+          "value": 8,
+          "kind": "float"
+        },
+        {
+          "name": "MPC_VEL_MANUAL",
+          "value": 8,
+          "kind": "float"
+        },
+        {
+          "name": "MPC_LAND_SPEED",
+          "value": 0.35,
+          "kind": "float"
+        }
+      ]
     }
   },
   "profiles": [
@@ -195,11 +494,18 @@
       "key": "outdoor-gps",
       "name": "DEXI-10 Outdoor (GPS) — Complete Setup",
       "description": "Plug in the dexi-gps, flash this, go. GPS + external-compass outdoor flight for the DEXI-10 on a Pixhawk 6X, exactly as flight-validated on 2026-08-09. Includes the RC map, so a pilot always has a 3-position mode switch to leave Position hold and a kill switch. Requires the dexi-gps on GPS2 and the CRSF receiver on TELEM3.",
-      "airframeIds": [4019],
+      "airframeIds": [
+        4019
+      ],
       "isDefault": true,
       "selfContained": true,
       "comingSoon": false,
-      "blocks": ["ports", "rc", "external-compass", "outdoor-gps-nav"],
+      "blocks": [
+        "ports",
+        "rc",
+        "external-compass",
+        "outdoor-gps-nav"
+      ],
       "details": [
         "Ports: GPS on GPS2 (GPS_1_CONFIG = 202), CRSF receiver on TELEM3 (RC_CRSF_PRT_CFG = 103)",
         "Pilot authority: CH6 3-position mode switch (down Stabilized / centre Altitude / up Position) and CH8 kill switch",
@@ -210,6 +516,37 @@
         "Arming is not blocked on GPS (COM_ARM_WO_GPS = 1), so Stabilized bench work still works",
         "Run QGC compass calibration after fitting the board; rotation is detected, not hardcoded",
         "Flight tune comes from the 4019 airframe, so this profile does not set one"
+      ]
+    },
+    {
+      "key": "avr-indoor-flow",
+      "name": "DEXI-10 AVR Indoor (H-Flow) — Complete Setup",
+      "description": "Base parameter set for AVR 2026 teams. Indoor, GPS-denied flight on the Holybro H-Flow (DroneCAN), PX4 1.16.2 on the Pixhawk 6X, transcribed from the DroneBlocks reference aircraft on 2026-09-29. Includes the RC map (CH5 arm, CH6 3-position mode switch, CH8 kill). Calibration is not included: run accel, gyro, level and RC calibration on each aircraft after loading.",
+      "airframeIds": [
+        4019
+      ],
+      "isDefault": false,
+      "selfContained": true,
+      "comingSoon": false,
+      "blocks": [
+        "ports-avr",
+        "motors",
+        "rc",
+        "rc-avr",
+        "battery",
+        "indoor-flow-nav",
+        "indoor-limits"
+      ],
+      "details": [
+        "Ports: CRSF receiver on TELEM3 (RC_PORT_CONFIG = 103, RC_INPUT_PROTO = 6), no GPS, MAVLink on TELEM1, XRCE-DDS on TELEM2",
+        "Pilot authority: CH5 arm, CH6 3-position mode switch (down Stabilized / center Altitude / up Position), CH8 kill switch, stick arming gesture off",
+        "Position: H-Flow optical flow + rangefinder over DroneCAN (UAVCAN_SUB_FLOW / UAVCAN_SUB_RNG = 1, EKF2_OF_CTRL = 1, EKF2_HGT_REF = 2)",
+        "Baro fusion and GPS fusion off, no compass required (SYS_HAS_MAG = 0)",
+        "Motors: MAIN 1-4 PWM 1100-1900, AUX 1-4 DShot300",
+        "Battery: 4S 5200 mAh",
+        "Speed: MPC_XY_VEL_MAX = 8, MPC_VEL_MANUAL = 8, land speed 0.35 m/s",
+        "Flight tune comes from the 4019 airframe, so this profile does not set one",
+        "Calibrate accel, gyro, level and RC on each aircraft after loading"
       ]
     }
   ]

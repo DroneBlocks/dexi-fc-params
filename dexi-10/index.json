@@ -10,6 +10,17 @@
       "additive": false,
       "comingSoon": false,
       "description": "Plug in the dexi-gps, flash this, go. GPS + external-compass outdoor flight for the DEXI-10 on a Pixhawk 6X, exactly as flight-validated on 2026-08-09. Includes the RC map, so a pilot always has a 3-position mode switch to leave Position hold and a kill switch. Requires the dexi-gps on GPS2 and the CRSF receiver on TELEM3."
+    },
+    {
+      "key": "avr-indoor-flow",
+      "name": "DEXI-10 AVR Indoor (H-Flow) — Complete Setup",
+      "file": "avr-indoor-flow.params",
+      "paramCount": 59,
+      "isDefault": false,
+      "selfContained": true,
+      "additive": false,
+      "comingSoon": false,
+      "description": "Base parameter set for AVR 2026 teams. Indoor, GPS-denied flight on the Holybro H-Flow (DroneCAN), PX4 1.16.2 on the Pixhawk 6X, transcribed from the DroneBlocks reference aircraft on 2026-09-29. Includes the RC map (CH5 arm, CH6 3-position mode switch, CH8 kill). Calibration is not included: run accel, gyro, level and RC calibration on each aircraft after loading."
     }
   ]
 }

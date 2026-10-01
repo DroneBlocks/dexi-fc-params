@@ -1,0 +1,15 @@
+# QGroundControl / PX4 onboard parameters
+#
+# GENERATED from src/dexi-3.json by tools/gen-params.mjs — do not edit.
+#
+# Profile: DEXI-5 Landing Descent Rate  (key: dexi5-landing)
+# Add-on for DEXI-5 only. Raises the final descent rate so the aircraft spends less time in the last 10 cm, which is flown blind because the range finder is inside its minimum distance there. Load on top of a DEXI-5 indoor profile.
+#
+# Valid airframes (SYS_AUTOSTART): 4601
+# Overlay — these are the params the DEXI configurator writes for this profile.
+# Load in QGC: Vehicle Setup > Parameters > Tools > Load from file.
+# After loading, the FC reboots / power-cycle to let the EKF reinitialize.
+#
+#
+# MAV	COMP	PARAM	VALUE	TYPE
+1	1	MPC_LAND_SPEED	0.5	9

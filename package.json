@@ -1,7 +1,7 @@
 {
   "name": "@droneblocks/dexi-fc-params",
   "version": "1.2.0",
-  "description": "Source of truth for DEXI flight-controller parameters (DEXI-3, DEXI-10). Generates the QGC .params files; consumed by px4-web-configurator and droneblocks-mavlink-tool.",
+  "description": "Source of truth for DEXI flight-controller parameters (DEXI-3, DEXI-5, DEXI-10). Generates the QGC .params files; consumed by px4-web-configurator and droneblocks-mavlink-tool.",
   "license": "MIT",
   "type": "module",
   "repository": {
@@ -11,6 +11,7 @@
   "exports": {
     "./dexi-3": "./src/dexi-3.json",
     "./dexi-10": "./src/dexi-10.json",
+    "./dexi-5": "./src/dexi-5.json",
     "./gen": "./tools/gen-params.mjs",
     "./package.json": "./package.json"
   },

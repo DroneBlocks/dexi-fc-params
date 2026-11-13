@@ -1,0 +1,79 @@
+{
+  "$comment": "SOURCE OF TRUTH for DEXI-5 flight-controller parameters. The .params files in dexi-5/ are GENERATED from this file by tools/gen-params.mjs. Never hand-edit them. Values sit on top of PX4's 4601_droneblocks_dexi_5 airframe defaults and list only what differs from them.",
+  "schemaVersion": 1,
+  "vehicle": "dexi-5",
+  "name": "DEXI-5",
+  "airframeId": 4601,
+  "boardId": 58,
+  "board": "ark-pi6x",
+  "categoryLabels": {
+    "navigation": "Navigation",
+    "safety": "Safety / failsafe",
+    "tune": "Flight tune"
+  },
+  "boardDefaults": {
+    "$comment": "Nothing yet: the 4601 airframe already sets ports and RC input for the ARK Pi6X.",
+    "blocks": []
+  },
+  "blocks": {
+    "indoor-flow-nav": {
+      "category": "navigation",
+      "doc": "Optical flow + rangefinder, no GPS. Rangefinder is the height reference with the barometer kept on but barely weighted. Flight-validated 2026-11-13 (PX4 1.16.2): offboard takeoff to 1.5 m reaches 1.49-1.52 m with no height resets.",
+      "params": [
+        { "name": "EKF2_HGT_REF", "value": 2, "kind": "int", "note": "Rangefinder is the height reference." },
+        { "name": "EKF2_RNG_CTRL", "value": 2, "kind": "int", "note": "Always fuse the rangefinder." },
+        { "name": "EKF2_OF_CTRL", "value": 1, "kind": "int" },
+        { "name": "EKF2_GPS_CTRL", "value": 0, "kind": "int" },
+        { "name": "EKF2_BARO_CTRL", "value": 1, "kind": "int", "note": "Keep ON. At 0 with HGT_REF 2, PX4 1.16 resets height to the rangefinder every 5 s (fixed on PX4 main 14da9d13b5, not in any release): a 0.2-0.3 m bob every 5 s." },
+        { "name": "EKF2_BARO_NOISE", "value": 15.0, "kind": "float", "note": "Barometer barely weighted. Prop wash reads +5 m at liftoff and +2.8 m in hover; at the stock noise the EKF follows it and an offboard takeoff to 1.5 m sinks to about 0.3 m." },
+        { "name": "EKF2_TERR_NOISE", "value": 0.5, "kind": "float", "note": "Steady floor estimate, so the rangefinder corrects height instead of being absorbed by the terrain state." },
+        { "name": "SYS_HAS_GPS", "value": 0, "kind": "int" },
+        { "name": "COM_ARM_WO_GPS", "value": 1, "kind": "int", "note": "Without it arming is denied with 'Global position estimate required'." }
+      ]
+    },
+    "tune-liion-4000": {
+      "category": "tune",
+      "doc": "PX4 autotune result, 2026-11-13, on the 6S 4000 mAh Li-ion pack strapped tight. The stock 4601 gains gave a pitch-only 8-9 Hz shake on battery (gyro std 3.7 deg/s pitch); autotuned: 2.0 deg/s. Unchanged from 4601: MC_ROLLRATE_D 0.001, all _FF and _K. One aircraft so far.",
+      "params": [
+        { "name": "MC_ROLLRATE_P", "value": 0.0498, "kind": "float", "note": "4601: 0.095" },
+        { "name": "MC_ROLLRATE_I", "value": 0.0679, "kind": "float", "note": "4601: 0.165" },
+        { "name": "MC_PITCHRATE_P", "value": 0.0482, "kind": "float", "note": "4601: 0.105" },
+        { "name": "MC_PITCHRATE_I", "value": 0.0588, "kind": "float", "note": "4601: 0.185" },
+        { "name": "MC_PITCHRATE_D", "value": 0.0005, "kind": "float", "note": "4601: 0.0013" },
+        { "name": "MC_YAWRATE_P", "value": 0.0808, "kind": "float", "note": "4601: 0.13" },
+        { "name": "MC_YAWRATE_I", "value": 0.0868, "kind": "float", "note": "4601: 0.35" },
+        { "name": "MC_YAWRATE_D", "value": 0.0001, "kind": "float", "note": "4601: 0" },
+        { "name": "MC_ROLL_P", "value": 6.5, "kind": "float", "note": "4601: 7.5" },
+        { "name": "MC_PITCH_P", "value": 6.5, "kind": "float", "note": "4601: 7.5" }
+      ]
+    },
+    "battery-6s-liion": {
+      "category": "safety",
+      "doc": "6S 4000 mAh Li-ion. Per-cell voltages, sag-corrected by PX4. At BAT1_V_EMPTY 3.3 the pack reads 0% at the 3.3 V resting stop; at 3.2 the low warning lands near it.",
+      "params": [
+        { "name": "BAT1_N_CELLS", "value": 6, "kind": "int" },
+        { "name": "BAT1_CAPACITY", "value": 4000, "kind": "float" },
+        { "name": "BAT1_V_EMPTY", "value": 3.2, "kind": "float" },
+        { "name": "BAT1_V_CHARGED", "value": 4.15, "kind": "float" }
+      ]
+    }
+  },
+  "profiles": [
+    {
+      "key": "indoor-flow",
+      "name": "DEXI-5 Indoor (flow + rangefinder)",
+      "description": "Indoor flow + rangefinder navigation, the autotuned gains and the 6S Li-ion battery, layered on the 4601 airframe defaults. Flight-validated on one DEXI-5, 2026-11-13.",
+      "airframeIds": [4601],
+      "isDefault": true,
+      "selfContained": false,
+      "additive": true,
+      "comingSoon": false,
+      "blocks": ["indoor-flow-nav", "tune-liion-4000", "battery-6s-liion"],
+      "details": [
+        "Height: rangefinder reference, barometer on at noise 15 (EKF2_BARO_CTRL 0 bobs every 5 s on PX4 1.16)",
+        "Tune: PX4 autotune on the 6S 4000 mAh Li-ion pack; rate gains about half of 4601",
+        "Battery: 6S Li-ion, empty 3.2 V / charged 4.15 V per cell"
+      ]
+    }
+  ]
+}

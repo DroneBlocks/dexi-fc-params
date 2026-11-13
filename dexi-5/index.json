@@ -1,0 +1,15 @@
+{
+  "profiles": [
+    {
+      "key": "indoor-flow",
+      "name": "DEXI-5 Indoor (flow + rangefinder)",
+      "file": "indoor-flow.params",
+      "paramCount": 23,
+      "isDefault": true,
+      "selfContained": false,
+      "additive": true,
+      "comingSoon": false,
+      "description": "Indoor flow + rangefinder navigation, the autotuned gains and the 6S Li-ion battery, layered on the 4601 airframe defaults. Flight-validated on one DEXI-5, 2026-11-13."
+    }
+  ]
+}

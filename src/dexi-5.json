@@ -56,6 +56,22 @@
         { "name": "BAT1_V_EMPTY", "value": 3.2, "kind": "float" },
         { "name": "BAT1_V_CHARGED", "value": 4.15, "kind": "float" }
       ]
+    },
+    "outdoor-gps-nav": {
+      "category": "navigation",
+      "doc": "GPS position and velocity, flow off. GPS is the height reference (PX4 default) with the barometer fused for short-term height. Flown 2026-11-12 on 00240044 with the same set except EKF2_HGT_REF 0 (baro); HGT_REF 1 not yet flown.",
+      "params": [
+        { "name": "SYS_HAS_GPS", "value": 1, "kind": "int" },
+        { "name": "EKF2_GPS_CTRL", "value": 7, "kind": "int", "note": "Horizontal position, vertical position and velocity." },
+        { "name": "EKF2_OF_CTRL", "value": 0, "kind": "int" },
+        { "name": "EKF2_HGT_REF", "value": 1, "kind": "int", "note": "GPS is the height reference, the PX4 default." },
+        { "name": "EKF2_RNG_CTRL", "value": 1, "kind": "int", "note": "Rangefinder only when conditions allow (near the ground)." },
+        { "name": "EKF2_BARO_CTRL", "value": 1, "kind": "int" },
+        { "name": "EKF2_BARO_NOISE", "value": 3.5, "kind": "float", "note": "PX4 default. Undoes the indoor profile's 15." },
+        { "name": "EKF2_TERR_NOISE", "value": 5.0, "kind": "float", "note": "PX4 default. Undoes the indoor profile's 0.5." },
+        { "name": "EKF2_MAG_TYPE", "value": 0, "kind": "int", "note": "Compass on (automatic)." },
+        { "name": "COM_ARM_WO_GPS", "value": 0, "kind": "int", "note": "No arming without a GPS fix." }
+      ]
     }
   },
   "profiles": [
@@ -73,6 +89,22 @@
         "Height: rangefinder reference, barometer on at noise 15 (EKF2_BARO_CTRL 0 bobs every 5 s on PX4 1.16)",
         "Tune: PX4 autotune on the 6S 4000 mAh Li-ion pack; rate gains about half of 4601",
         "Battery: 6S Li-ion, empty 3.2 V / charged 4.15 V per cell"
+      ]
+    },
+    {
+      "key": "outdoor-gps",
+      "name": "DEXI-5 Outdoor (GPS)",
+      "description": "GPS + compass outdoor flight, the autotuned gains and the 6S Li-ion battery, layered on the 4601 airframe defaults. Requires the GPS/Remote ID module. Flown 2026-11-12 with baro height; GPS height not yet flown, so kept hidden until then.",
+      "airframeIds": [4601],
+      "isDefault": false,
+      "selfContained": false,
+      "additive": true,
+      "comingSoon": true,
+      "blocks": ["outdoor-gps-nav", "tune-liion-4000", "battery-6s-liion"],
+      "details": [
+        "Position: GPS (EKF2_GPS_CTRL 7), flow off, compass on",
+        "Height: GPS reference with the barometer fused at PX4 default noise; rangefinder near the ground only",
+        "Tune and battery: same as Indoor"
       ]
     }
   ]

@@ -10,6 +10,17 @@
       "additive": true,
       "comingSoon": false,
       "description": "Indoor flow + rangefinder navigation, the autotuned gains and the 6S Li-ion battery, layered on the 4601 airframe defaults. Flight-validated on one DEXI-5, 2026-11-13."
+    },
+    {
+      "key": "outdoor-gps",
+      "name": "DEXI-5 Outdoor (GPS)",
+      "file": "outdoor-gps.params",
+      "paramCount": 24,
+      "isDefault": false,
+      "selfContained": false,
+      "additive": true,
+      "comingSoon": true,
+      "description": "GPS + compass outdoor flight, the autotuned gains and the 6S Li-ion battery, layered on the 4601 airframe defaults. Requires the GPS/Remote ID module. Flown 2026-11-12 with baro height; GPS height not yet flown, so kept hidden until then."
     }
   ]
 }

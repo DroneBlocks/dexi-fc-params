@@ -4,7 +4,7 @@
       "key": "indoor-flow",
       "name": "DEXI-5 Indoor (flow + rangefinder)",
       "file": "indoor-flow.params",
-      "paramCount": 23,
+      "paramCount": 24,
       "isDefault": true,
       "selfContained": false,
       "additive": true,

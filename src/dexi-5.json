@@ -16,6 +16,13 @@
     "blocks": []
   },
   "blocks": {
+    "imu-cal": {
+      "category": "estimator",
+      "doc": "Keep the bench calibration. PX4's default SENS_IMU_AUTOCAL 1 saves the EKF's learned accel/gyro bias over it on disarm; on this DEXI-5 that moved ACC0 Y -0.046 -> -0.429 -> -0.111 m/s^2 across five saves in three days (2026-10-16..19).",
+      "params": [
+        { "name": "SENS_IMU_AUTOCAL", "value": 0, "kind": "int", "note": "0 = never overwrite the calibration with the learned bias. In-flight bias estimation and the boot gyro cal are unaffected." }
+      ]
+    },
     "indoor-flow-nav": {
       "category": "navigation",
       "doc": "Optical flow + rangefinder, no GPS. Rangefinder is the height reference with the barometer kept on but barely weighted. Flight-validated 2026-11-13 (PX4 1.16.2): offboard takeoff to 1.5 m reaches 1.49-1.52 m with no height resets.",
@@ -68,7 +75,7 @@
       "selfContained": false,
       "additive": true,
       "comingSoon": false,
-      "blocks": ["indoor-flow-nav", "tune-liion-4000", "battery-6s-liion"],
+      "blocks": ["imu-cal", "indoor-flow-nav", "tune-liion-4000", "battery-6s-liion"],
       "details": [
         "Height: rangefinder reference, barometer on at noise 15 (EKF2_BARO_CTRL 0 bobs every 5 s on PX4 1.16)",
         "Tune: PX4 autotune on the 6S 4000 mAh Li-ion pack; rate gains about half of 4601",

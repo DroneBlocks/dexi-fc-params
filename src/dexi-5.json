@@ -1,0 +1,69 @@
+{
+  "$comment": "SOURCE OF TRUTH for DEXI-5 flight-controller parameters. The .params files in dexi-5/ are GENERATED from this file by tools/gen-params.mjs. Never hand-edit them. Values sit on top of PX4's 4601_droneblocks_dexi_5 airframe defaults and list only what differs from them.",
+  "schemaVersion": 1,
+  "vehicle": "dexi-5",
+  "name": "DEXI-5",
+  "airframeId": 4601,
+  "boardId": 58,
+  "board": "ark-pi6x",
+  "categoryLabels": {
+    "navigation": "Navigation",
+    "safety": "Safety / failsafe",
+    "tune": "Flight tune",
+    "logging": "Logging"
+  },
+  "boardDefaults": {
+    "$comment": "Nothing yet: the 4601 airframe already sets ports and RC input for the ARK Pi6X.",
+    "blocks": []
+  },
+  "blocks": {
+    "heading-indoor": {
+      "category": "navigation",
+      "doc": "Gyro-only heading indoors. Height and flow stay on the 4601 airframe defaults; EKF height tuning for auto takeoff is a separate change.",
+      "params": [
+        { "name": "EKF2_MAG_TYPE", "value": 5, "kind": "int", "note": "No magnetometer; heading from the gyro. On 003f001a (2026-11-23) the in-flight mag field test ratio hit 7.5 p95 / 20 max indoors with a clean 6-side cal, plus 'Strong magnetic interference'; at 5 the warning is gone." }
+      ]
+    },
+    "tune-liion-4000": {
+      "category": "tune",
+      "doc": "PX4 autotune result, 2026-11-13, on the 6S 4000 mAh Li-ion pack strapped tight. The stock 4601 gains gave a pitch-only 8-9 Hz shake on battery (gyro std 3.7 deg/s pitch); autotuned: 2.0 deg/s. Unchanged from 4601: MC_ROLLRATE_D 0.001, all _FF and _K. MC_YAW_P stays at 4601's 2.8 on purpose: autotune clamps attitude P to 2.0-6.5 and returned the 6.5 ceiling, and yaw tracking was worse at it (rate error 1.8 vs 0.8 deg/s). Second aircraft 003f001a, 2026-11-23: roll/pitch gyro 2.0/2.8 -> 1.2/2.4 deg/s.",
+      "params": [
+        { "name": "MC_ROLLRATE_P", "value": 0.0498, "kind": "float", "note": "4601: 0.095" },
+        { "name": "MC_ROLLRATE_I", "value": 0.0679, "kind": "float", "note": "4601: 0.165" },
+        { "name": "MC_PITCHRATE_P", "value": 0.0482, "kind": "float", "note": "4601: 0.105" },
+        { "name": "MC_PITCHRATE_I", "value": 0.0588, "kind": "float", "note": "4601: 0.185" },
+        { "name": "MC_PITCHRATE_D", "value": 0.0005, "kind": "float", "note": "4601: 0.0013" },
+        { "name": "MC_YAWRATE_P", "value": 0.0808, "kind": "float", "note": "4601: 0.13" },
+        { "name": "MC_YAWRATE_I", "value": 0.0868, "kind": "float", "note": "4601: 0.35" },
+        { "name": "MC_YAWRATE_D", "value": 0.0001, "kind": "float", "note": "4601: 0" },
+        { "name": "MC_ROLL_P", "value": 6.5, "kind": "float", "note": "4601: 7.5" },
+        { "name": "MC_PITCH_P", "value": 6.5, "kind": "float", "note": "4601: 7.5" }
+      ]
+    },
+    "logging": {
+      "category": "logging",
+      "doc": "Log the estimator-replay topics too (bit 0 default + bit 1 EKF2 replay), so flow, rangefinder and EKF topics in a customer log are full rate instead of about 1 Hz. Logging still runs arm to disarm (SDLOG_MODE 0).",
+      "params": [
+        { "name": "SDLOG_PROFILE", "value": 3, "kind": "int", "note": "4601: 1" }
+      ]
+    }
+  },
+  "profiles": [
+    {
+      "key": "indoor-flow",
+      "name": "DEXI-5 Indoor (flow + rangefinder)",
+      "description": "Autotuned gains, gyro-only heading and full-rate logging, layered on the 4601 airframe defaults (which already set flow + rangefinder navigation). Flight-validated on two DEXI-5s, 2026-11-13 and 2026-11-23.",
+      "airframeIds": [4601],
+      "isDefault": true,
+      "selfContained": false,
+      "additive": true,
+      "comingSoon": false,
+      "blocks": ["heading-indoor", "tune-liion-4000", "logging"],
+      "details": [
+        "Heading: gyro-only (EKF2_MAG_TYPE = 5); building steel corrupts the mag indoors",
+        "Tune: PX4 autotune on the 6S 4000 mAh Li-ion pack; rate gains about half of 4601",
+        "Logging: SDLOG_PROFILE 3 (adds EKF replay topics) for full-rate customer logs"
+      ]
+    }
+  ]
+}

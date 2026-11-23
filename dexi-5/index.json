@@ -1,0 +1,15 @@
+{
+  "profiles": [
+    {
+      "key": "indoor-flow",
+      "name": "DEXI-5 Indoor (flow + rangefinder)",
+      "file": "indoor-flow.params",
+      "paramCount": 12,
+      "isDefault": true,
+      "selfContained": false,
+      "additive": true,
+      "comingSoon": false,
+      "description": "Autotuned gains, gyro-only heading and full-rate logging, layered on the 4601 airframe defaults (which already set flow + rangefinder navigation). Flight-validated on two DEXI-5s, 2026-11-13 and 2026-11-23."
+    }
+  ]
+}

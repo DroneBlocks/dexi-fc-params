@@ -1,0 +1,26 @@
+# QGroundControl / PX4 onboard parameters
+#
+# GENERATED from src/dexi-5.json by tools/gen-params.mjs — do not edit.
+#
+# Profile: DEXI-5 Indoor (flow + rangefinder)  (key: indoor-flow)
+# Autotuned gains, gyro-only heading and full-rate logging, layered on the 4601 airframe defaults (which already set flow + rangefinder navigation). Flight-validated on two DEXI-5s, 2026-11-13 and 2026-11-23.
+#
+# Valid airframes (SYS_AUTOSTART): 4601
+# ADDITIVE overlay — sets ONLY the params below, layers on top of your current config.
+# Load in QGC: Vehicle Setup > Parameters > Tools > Load from file.
+# After loading, the FC reboots / power-cycle to let the EKF reinitialize.
+#
+#
+# MAV	COMP	PARAM	VALUE	TYPE
+1	1	EKF2_MAG_TYPE	5	6
+1	1	MC_ROLLRATE_P	0.0498	9
+1	1	MC_ROLLRATE_I	0.0679	9
+1	1	MC_PITCHRATE_P	0.0482	9
+1	1	MC_PITCHRATE_I	0.0588	9
+1	1	MC_PITCHRATE_D	0.0005	9
+1	1	MC_YAWRATE_P	0.0808	9
+1	1	MC_YAWRATE_I	0.0868	9
+1	1	MC_YAWRATE_D	0.0001	9
+1	1	MC_ROLL_P	6.5	9
+1	1	MC_PITCH_P	6.5	9
+1	1	SDLOG_PROFILE	3	6

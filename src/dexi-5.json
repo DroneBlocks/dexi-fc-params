@@ -9,7 +9,8 @@
   "categoryLabels": {
     "navigation": "Navigation",
     "safety": "Safety / failsafe",
-    "tune": "Flight tune"
+    "tune": "Flight tune",
+    "logging": "Logging"
   },
   "boardDefaults": {
     "$comment": "Nothing yet: the 4601 airframe already sets ports and RC input for the ARK Pi6X.",
@@ -28,12 +29,13 @@
         { "name": "EKF2_BARO_NOISE", "value": 15.0, "kind": "float", "note": "Barometer barely weighted. Prop wash reads +5 m at liftoff and +2.8 m in hover; at the stock noise the EKF follows it and an offboard takeoff to 1.5 m sinks to about 0.3 m." },
         { "name": "EKF2_TERR_NOISE", "value": 0.5, "kind": "float", "note": "Steady floor estimate, so the rangefinder corrects height instead of being absorbed by the terrain state." },
         { "name": "SYS_HAS_GPS", "value": 0, "kind": "int" },
-        { "name": "COM_ARM_WO_GPS", "value": 1, "kind": "int", "note": "Without it arming is denied with 'Global position estimate required'." }
+        { "name": "COM_ARM_WO_GPS", "value": 1, "kind": "int", "note": "Without it arming is denied with 'Global position estimate required'." },
+        { "name": "EKF2_MAG_TYPE", "value": 5, "kind": "int", "note": "No magnetometer; heading from the gyro. On 003f001a (2026-11-23) the in-flight mag field test ratio hit 7.5 p95 / 20 max indoors with a clean 6-side cal, plus 'Strong magnetic interference'; at 5 the warning is gone." }
       ]
     },
     "tune-liion-4000": {
       "category": "tune",
-      "doc": "PX4 autotune result, 2026-11-13, on the 6S 4000 mAh Li-ion pack strapped tight. The stock 4601 gains gave a pitch-only 8-9 Hz shake on battery (gyro std 3.7 deg/s pitch); autotuned: 2.0 deg/s. Unchanged from 4601: MC_ROLLRATE_D 0.001, all _FF and _K. One aircraft so far.",
+      "doc": "PX4 autotune result, 2026-11-13, on the 6S 4000 mAh Li-ion pack strapped tight. The stock 4601 gains gave a pitch-only 8-9 Hz shake on battery (gyro std 3.7 deg/s pitch); autotuned: 2.0 deg/s. Unchanged from 4601: MC_ROLLRATE_D 0.001, all _FF and _K. MC_YAW_P stays at 4601's 2.8 on purpose: autotune clamps attitude P to 2.0-6.5 and returned the 6.5 ceiling, and yaw tracking was worse at it (rate error 1.8 vs 0.8 deg/s). Second aircraft 003f001a, 2026-11-23: roll/pitch gyro 2.0/2.8 -> 1.2/2.4 deg/s.",
       "params": [
         { "name": "MC_ROLLRATE_P", "value": 0.0498, "kind": "float", "note": "4601: 0.095" },
         { "name": "MC_ROLLRATE_I", "value": 0.0679, "kind": "float", "note": "4601: 0.165" },
@@ -45,6 +47,13 @@
         { "name": "MC_YAWRATE_D", "value": 0.0001, "kind": "float", "note": "4601: 0" },
         { "name": "MC_ROLL_P", "value": 6.5, "kind": "float", "note": "4601: 7.5" },
         { "name": "MC_PITCH_P", "value": 6.5, "kind": "float", "note": "4601: 7.5" }
+      ]
+    },
+    "logging": {
+      "category": "logging",
+      "doc": "Log the estimator-replay topics too (bit 0 default + bit 1 EKF2 replay), so flow, rangefinder and EKF topics in a customer log are full rate instead of about 1 Hz. Logging still runs arm to disarm (SDLOG_MODE 0).",
+      "params": [
+        { "name": "SDLOG_PROFILE", "value": 3, "kind": "int", "note": "4601: 1" }
       ]
     },
     "battery-6s-liion": {
@@ -68,11 +77,13 @@
       "selfContained": false,
       "additive": true,
       "comingSoon": false,
-      "blocks": ["indoor-flow-nav", "tune-liion-4000", "battery-6s-liion"],
+      "blocks": ["indoor-flow-nav", "tune-liion-4000", "battery-6s-liion", "logging"],
       "details": [
+        "Heading: gyro-only (EKF2_MAG_TYPE = 5); building steel corrupts the mag indoors",
         "Height: rangefinder reference, barometer on at noise 15 (EKF2_BARO_CTRL 0 bobs every 5 s on PX4 1.16)",
         "Tune: PX4 autotune on the 6S 4000 mAh Li-ion pack; rate gains about half of 4601",
-        "Battery: 6S Li-ion, empty 3.2 V / charged 4.15 V per cell"
+        "Battery: 6S Li-ion, empty 3.2 V / charged 4.15 V per cell",
+        "Logging: SDLOG_PROFILE 3 (adds EKF replay topics) for full-rate customer logs"
       ]
     }
   ]

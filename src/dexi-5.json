@@ -17,6 +17,13 @@
     "blocks": []
   },
   "blocks": {
+    "imu-cal": {
+      "category": "estimator",
+      "doc": "Keep the bench calibration. PX4's default SENS_IMU_AUTOCAL 1 saves the EKF's learned accel/gyro bias over it on disarm; on this DEXI-5 that moved ACC0 Y -0.046 -> -0.429 -> -0.111 m/s^2 across five saves in three days (2026-10-16..19).",
+      "params": [
+        { "name": "SENS_IMU_AUTOCAL", "value": 0, "kind": "int", "note": "0 = never overwrite the calibration with the learned bias. In-flight bias estimation and the boot gyro cal are unaffected." }
+      ]
+    },
     "heading-indoor": {
       "category": "navigation",
       "doc": "Gyro-only heading indoors. Height and flow stay on the 4601 airframe defaults; EKF height tuning for auto takeoff is a separate change.",
@@ -58,7 +65,7 @@
       "selfContained": false,
       "additive": true,
       "comingSoon": false,
-      "blocks": ["heading-indoor", "tune-liion-4000", "logging"],
+      "blocks": ["imu-cal", "heading-indoor", "tune-liion-4000", "logging"],
       "details": [
         "Heading: gyro-only (EKF2_MAG_TYPE = 5); building steel corrupts the mag indoors",
         "Tune: PX4 autotune on the 6S 4000 mAh Li-ion pack; rate gains about half of 4601",

@@ -1,0 +1,14 @@
+# QGroundControl / PX4 onboard parameters
+#
+# GENERATED from src/dexi-3.json by tools/gen-params.mjs — do not edit.
+#
+# Profile: DEXI-3 MicoAir MTF-02P flow sensor  (key: micoair-mtf02p)
+# ADDITIVE - for a DEXI-3 built with the MicoAir MTF-02P flow + range sensor instead of the UP-T201. Writes only SENS_FLOW_ROT = 6. Load your kit profile first, then this.
+#
+# ADDITIVE overlay — sets ONLY the params below, layers on top of your current config.
+# Load in QGC: Vehicle Setup > Parameters > Tools > Load from file.
+# After loading, the FC reboots / power-cycle to let the EKF reinitialize.
+#
+#
+# MAV	COMP	PARAM	VALUE	TYPE
+1	1	SENS_FLOW_ROT	6	6

@@ -76,6 +76,17 @@
       "additive": true,
       "comingSoon": false,
       "description": "ADDITIVE — writes ONLY the ACRO max rates for snappy flips/rolls. Touches nothing else: no comms/EKF/airframe params, no board defaults, no reboot. Layers on top of whatever profile you already run."
+    },
+    {
+      "key": "micoair-mtf02p",
+      "name": "DEXI-3 MicoAir MTF-02P flow sensor",
+      "file": "micoair-mtf02p.params",
+      "paramCount": 1,
+      "isDefault": false,
+      "selfContained": false,
+      "additive": true,
+      "comingSoon": false,
+      "description": "ADDITIVE - for a DEXI-3 built with the MicoAir MTF-02P flow + range sensor instead of the UP-T201. Writes only SENS_FLOW_ROT = 6. Load your kit profile first, then this."
     }
   ]
 }

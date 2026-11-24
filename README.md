@@ -79,6 +79,7 @@ Only if changing a mode or upgrading — not needed for a fresh setup.
 | [`dexi-3/indoor-apriltag.params`](dexi-3/indoor-apriltag.params) | Switch navigation to AprilTag / external vision (needs a live EV source) |
 | [`dexi-3/outdoor-gps.params`](dexi-3/outdoor-gps.params) | Switch to GPS outdoor mode (proposed — needs a GPS+compass module) |
 | [`dexi-3/acro-rates.params`](dexi-3/acro-rates.params) | Snappier ACRO max rates (additive tuning) |
+| [`dexi-3/micoair-mtf02p.params`](dexi-3/micoair-mtf02p.params) | DEXI-3 built with the MicoAir MTF-02P flow sensor: `SENS_FLOW_ROT = 6` (UP-T201 default is 4). Load after the kit file. |
 | [`dexi-3/developer-comms-addon.params`](dexi-3/developer-comms-addon.params) | Companion links only — upgrade an existing Flight Kit to Developer without redoing tune/nav |
 | [`dexi-3/indoor-flow.params`](dexi-3/indoor-flow.params) | Navigation-only flow block — revert to flow from another mode |
 
